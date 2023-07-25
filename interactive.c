@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * interactive - 
- * @av:
- * @env:
+ * interactive - Run the shell in interactive mode.
+ * @av: The argument vector containing the program name and its arguments.
  *
+ * Description: This function runs the shell in interactive mode,
  */
 
 void interactive(char **av)
