@@ -8,7 +8,7 @@ int main(void)
 	char *in = NULL;
 
 	printf("Enter something: ");
-	n = _getline(in, &buf, stdin);
+	n = _getline(in, buf, stdin);
 
 	printf("Input is: %s and no. chars are: %ld", in, n);
 
