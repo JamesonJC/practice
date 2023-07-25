@@ -2,40 +2,36 @@
 
 /**
  * path_finder - Function allocates path to the input.
- * @in: The user inpute.
+ * @str: The user inpute.
  * Return: The actual path of the inpute
  */
 
-char *search_path(const char *in)
+char *search_path(const char *str)
 {
-	char *path, *dup_path = NULL, *tok_path = NULL, *f_path = NULL;
+	char *path, *tok_path = NULL, *exact_path = NULL;
 	struct stat buffer;
 
 	path = getenv("PATH");
 	if (path)
 	{
-		dup_path = strdup(path);
-		tok_path = strtok(dup_path, ":");
+		tok_path = strtok(path, ":");
 		while (tok_path != NULL)
 		{
-			f_path = malloc(sizeof(char *) * BUFFER);
-			strcpy(f_path, tok_path);
-			strcat(f_path, "/");
-			strcat(f_path, in);
-			if (stat(f_path, &buffer) == 0)
+			exact_path = malloc(sizeof(char *) * BUFFER);
+			strcpy(exact_path, tok_path);
+			strcat(exact_path, "/");
+			strcat(exact_path, str);
+			if (stat(exact_path, &buffer) == 0)
 			{
-				free(dup_path);
-				return (f_path);
+				return (exact_path);
 			}
-			free(f_path);
+			free(exact_path);
 			tok_path = strtok(NULL, ":");
 		}
-		if (stat(in, &buffer) == 0)
+		if (stat(str, &buffer) == 0)
 		{
-			free(dup_path);
-			return (strdup(in));
+			return (strdup(str));
 		}
-		free(dup_path);
 		return (NULL);
 	}
 	return (NULL);

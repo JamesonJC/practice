@@ -1,29 +1,27 @@
 #include "main.h"
 
-#define MX_CMD 10
+/**
+ * interactive - 
+ * @av:
+ * @env:
+ *
+ */
 
-void interactive(char **av, char **env )
+void interactive(char **av)
 {
-	char *input = NULL;
+	char *input = NULL, *argv[MAX_STR_IN] = {NULL, NULL};
 	int i;
 	size_t buffer = 0;
 	ssize_t _chars;
-	char *argv[MX_CMD];
-	(void)env;
 
 	while(1)
 	{
 		printf("%s", PROMPT);
 		_chars = getline(&input, &buffer, stdin);
-		if (_chars == -1 || input == NULL)
-		{
-			free(input);
-			exit(1);
-		}
+		if (_chars < 0 || input == NULL)
+			break;
 
-		for(i = 0; input[i] != '\0'; i++)
-			if (input[i] == '\n')
-				input[i] = '\0';
+		input[strcspn(input, "\n")] = '\0';
 
 		argv[0] = strtok(input, " ");
 		
@@ -32,7 +30,9 @@ void interactive(char **av, char **env )
 			argv[++i] = strtok(NULL, " ");
 		}
 
-		if (exe(argv, av, NULL) == -1)
+		display_env(argv);
+
+		if (exe(argv, av) == -1)
 		{
 			free(input);
 			exit(1);

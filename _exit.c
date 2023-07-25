@@ -3,7 +3,7 @@
 /******/
 
 
-void _exit(pid)
+void shell_exit(pid_t pid, char **av)
 {
 	int state, exit_state;
 
