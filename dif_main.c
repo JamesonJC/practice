@@ -5,11 +5,14 @@ int main(void)
 {
 	ssize_t n;
 	size_t buf = 0;
-	char *in;
+	char *in = NULL;
 
 	printf("Enter something: ");
-	/*n = _getline(in, buf, 0);
+	n = _getline(in, &buf, stdin);
 
-	printf("Input is: %s and no. chars are: %ld", in, n);*/
+	printf("Input is: %s and no. chars are: %ld", in, n);
+
+	free(in);
 	return (0);
+
 }
