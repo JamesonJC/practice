@@ -20,6 +20,7 @@ void display_env(char *av[])
 
 	} else if (strcmp(av[0], "exit") == 0)
 	{
+		/*free()*/
 		exit(0);
 	}
 	else

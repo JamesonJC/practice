@@ -28,10 +28,12 @@ char *search_path(const char *str)
 			strcat(exact_path, str);
 			if (stat(exact_path, &buffer) == 0)
 			{
-				free(tok_path);
+				/*free(tok_path);
+				tok_path = NULL;*/
 				return (exact_path);
 			}
 			free(exact_path);
+			exact_path = NULL;
 			tok_path = strtok(NULL, ":");
 		}
 		if (stat(str, &buffer) == 0)
