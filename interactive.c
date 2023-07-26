@@ -14,7 +14,7 @@ void interactive(char **av)
 	size_t buffer = 0;
 	ssize_t _chars;
 
-	while(1)
+	while(-1)
 	{
 		printf("%s", PROMPT);
 		_chars = getline(&input, &buffer, stdin);
@@ -37,5 +37,7 @@ void interactive(char **av)
 			free(input);
 			exit(1);
 		}
+		free(input);
+		input = NULL;
 	}
 }

@@ -11,7 +11,7 @@
 pid_t exe(char **argv, char **av)
 {
 	char *path_cmd, *ext = "exit";
-	int *status = 0;
+	int status = 0;
 	pid_t id = fork();
 
 	if (id == -1)
@@ -19,19 +19,27 @@ pid_t exe(char **argv, char **av)
 
 	if (id == 0)
 	{
-		if (argv[0] == ext)
+		if (strcmp(argv[0], ext) == 0)
 			shell_exit(id, argv);
 		else
 		{
 			path_cmd = search_path(argv[0]);
-				if (execve(path_cmd, argv, NULL) == -1)
+			if (path_cmd == NULL)
+			{
 				perror(av[0]);
+				exit(1);
+			}
+			if (execve(path_cmd, argv, NULL) == -1)
+			{
+				perror(av[0]);
+				exit(1);
+			}
 		}
-		 return (id);
+		free(path_cmd);
 	}
 	else
 	{
-		wait(status);
-		return (id);
+		wait(&status);
 	}
+	 return (id);
 }

@@ -2,44 +2,46 @@
 
 /*******/
 
-ssize_t _getline(char *str, size_t index, int stream)
+ssize_t _getline(char *str, static size_t *buffer, FILE *stream)
 {
-	char c;
-	static char array_buffer[BUFFER];
-	static size_t buffer = 0;
+	int c;
+	static char temp[BUFFER];
+	size_t index = 0;
 	static ssize_t _chars = 0;
-	buffer = 0;
 
+	/*if (str == NULL || index == NULL)
+		return (-1);
+	*str = (char *)malloc(*n);
+	if (*str == NULL)
+		return (-1);*/
 	while(1)
 	{
 		if (buffer >= _chars)
 		{
-			if (stream == 0)
+			if (stream == stdin)
 			{
-				_chars = read(STDIN_FILENO, array_buffer, BUFFER);
+				_chars = read(STDIN_FILENO, temp, BUFFER);
 				buffer = 0;
 
 				if (_chars <= 0)
-				{
 					break;
-				}
 			}
 		}
-		c = array_buffer[buffer];
-		index++;
+		c = temp[buffer++];
 
 		if (c == '\n' || c == EOF)
 			break;
+
 		if (index == 0)
 			str = malloc(BUFFER);
 		else if (index % BUFFER == 0)
 			str = realloc(str, index + BUFFER);
-		str[index] = c;
+		str[index++] = c;
 	}
 	if (str)
 	{
-		str = realloc(str, index++);
+		str = realloc(str, index + 1);
 		str[index] = '\0';
 	}
-	return (_chars = index);
+	return (_chars /*= index*/);
 }
