@@ -14,7 +14,7 @@ void interactive(char **av)
 	size_t buffer = 0;
 	ssize_t _chars;
 
-	while(-1)
+	while (-1)
 	{
 		printf("%s", PROMPT);
 		_chars = getline(&input, &buffer, stdin);
@@ -24,8 +24,8 @@ void interactive(char **av)
 		input[strcspn(input, "\n")] = '\0';
 
 		argv[0] = strtok(input, " ");
-		
-		for(i = 0; argv[i] != NULL; i++)
+
+		for (i = 0; argv[i] != NULL; i++)
 		{
 			argv[++i] = strtok(NULL, " ");
 		}
